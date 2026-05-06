@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { TodoForm } from "./TodoForm";
 import { TodoList } from "./TodoList";
 
@@ -9,7 +9,7 @@ export const Todo = () => {
 	const [task, setTask] = useState(() => {
 
 		const rawTodo = localStorage.getItem(todoKeys)
-		if (!rawTodo) return;
+		if (!rawTodo) return [];
 
 		return JSON.parse(rawTodo);
 	});
@@ -32,7 +32,10 @@ export const Todo = () => {
 	}
 
 	//add local storage
-	localStorage.setItem(todoKeys, JSON.stringify(task))
+	useEffect(() => {
+		localStorage.setItem(todoKeys, JSON.stringify(task))
+	}, [task])
+
 
 
 	//data remove from list 
